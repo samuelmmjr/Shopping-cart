@@ -58,32 +58,18 @@ async function searchId(id) {
   const dataId = await itenId.json();
   createCartItemElement(dataId);
   document.querySelector('.cart__items').appendChild(createCartItemElement(dataId));
-  return dataId
-  }
+}
   
 function clickId() {
-  const addItem = document.querySelectorAll('.item__add');
+  const addItem = document.querySelector('.items');
   console.log(addItem);
-  addItem.forEach((button) => {
-  button.addEventListener('click', (event) => {
+  addItem.addEventListener('click', (event) => {
     const item = getSkuFromProductItem(event.target.parentElement);
-    const dataClick = 
     searchId(item);
   });
-  });
-};
-
-async function chamatodasassinc() {
-try { 
-  getItem();
-  await clickId();
-
-} catch(error) {
-console.log('erro qualquer')
-}
 }
 
 window.onload = function onload() {
-chamatodasassinc()
-
-}
+  getItem();
+  clickId();
+};
