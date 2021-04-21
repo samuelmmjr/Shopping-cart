@@ -35,7 +35,7 @@ async function totalPriceCar() {
   const itemValue = [...document.querySelectorAll('.cart__item')]; 
   const totalCar = itemValue.map((li) => parseFloat(li.innerText.split('$')[1]));
   total = totalCar.reduce((acc, current) => acc + current, 0);
-  document.querySelector('.total-price').innerText = `R$ ${total}`;
+  document.querySelector('.total-price').innerText = total;
 }
 
 // requisito 4
@@ -106,6 +106,7 @@ function searchLocalStorage() {
   [...listaDeLis].forEach((li) => {
     li.addEventListener('click', cartItemClickListener);
   });
+  totalPriceCar();
 }
 
 window.onload = async function onload() {
