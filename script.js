@@ -33,7 +33,7 @@ function cartItemClickListener(event) {
   event.target.remove();
 }
 
-function createCartItemElement({ id: sku, title: name, price: salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) { // await cartItemClickListener();
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -63,7 +63,7 @@ async function searchId(id) {
   
 function clickId() {
   const addItem = document.querySelectorAll('.item__add');
-  addItem.forEach(element => {
+  addItem.forEach((element) => {
     element.addEventListener('click', (event) => {
       const item = getSkuFromProductItem(event.target.parentElement);
       searchId(item);
