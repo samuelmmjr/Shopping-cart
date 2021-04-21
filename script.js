@@ -38,6 +38,11 @@ async function totalPriceCar() {
   document.querySelector('.total-price').innerText = total;
 }
 
+function saveLocalStorage() {
+  const toSaveItens = document.querySelector(cartItems);
+  localStorage.setItem('cart Item', toSaveItens.innerHTML);
+}
+
 function cartItemClickListener(event) {
   event.target.remove();
   totalPriceCar();
@@ -69,7 +74,7 @@ async function searchId(id) {
   const itenId = await fetch(`https://api.mercadolibre.com/items/${id}`);
   const dataId = await itenId.json();
   createCartItemElement(dataId);
-  document.querySelector('.cart__items').appendChild(createCartItemElement(dataId));
+  document.querySelector('.cartItems').appendChild(createCartItemElement(dataId));
   totalPriceCar();
   saveLocalStorage();
 }
@@ -84,14 +89,9 @@ function clickId() {
   });
 }
 
-function saveLocalStorage() {
-  const toSaveItens = document.querySelector(cartItems);
-  localStorage.setItem('cart Item', toSaveItens.innerHTML);
-  }
-
 function localStorageCar() {
   const localStorageItem = localStorage.getItem('cart Item');
-  const ol = document.querySelector('.cart__items');
+  const ol = document.querySelector('cartItems');
   ol.innerHTML = localStorageItem;
   const listaDeLis = document.querySelectorAll('.cart__item');
   [...listaDeLis].forEach((li) => {
