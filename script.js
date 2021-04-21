@@ -1,4 +1,4 @@
-const cartItems = '.cart__items';
+const itemsCart = '.cart__items';
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -35,13 +35,17 @@ async function totalPriceCar() {
   const itemValue = [...document.querySelectorAll('.cart__item')]; 
   const totalCar = itemValue.map((li) => parseFloat(li.innerText.split('$')[1]));
   total = totalCar.reduce((acc, current) => acc + current, 0);
-  document.querySelector('.total-price').innerText = total;
+  document.querySelector('.total-price').innerText = `R$ ${total}`;
 }
 
+// requisito 4
+
 function saveLocalStorage() {
-  const toSaveItens = document.querySelector(cartItems);
+  const toSaveItens = document.querySelector(itemsCart);
   localStorage.setItem('cart Item', toSaveItens.innerHTML);
-}
+  }
+
+// requisito 3
 
 function cartItemClickListener(event) {
   event.target.remove();
@@ -56,6 +60,9 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) { // 
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+
+// requisito 1
+
 async function searchProduct() {
     const products = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
     const data = await products.json();
@@ -70,11 +77,13 @@ async function getItem() {
   });
 }
 
+// requisito 2
+
 async function searchId(id) {
   const itenId = await fetch(`https://api.mercadolibre.com/items/${id}`);
   const dataId = await itenId.json();
   createCartItemElement(dataId);
-  document.querySelector('.cartItems').appendChild(createCartItemElement(dataId));
+  document.querySelector('.cart__items').appendChild(createCartItemElement(dataId));
   totalPriceCar();
   saveLocalStorage();
 }
@@ -89,11 +98,11 @@ function clickId() {
   });
 }
 
-function localStorageCar() {
-  const localStorageItem = localStorage.getItem('cart Item');
-  const ol = document.querySelector('cartItems');
-  ol.innerHTML = localStorageItem;
-  const listaDeLis = document.querySelectorAll('.cart__item');
+function searchLocalStorage() {
+  const localstorageItems = localStorage.getItem('cart Item');
+  const ol = document.querySelector(itemsCart);
+  ol.innerHTML = localstorageItems;
+  const listaDeLis = document.querySelectorAll(itemsCart);
   [...listaDeLis].forEach((li) => {
     li.addEventListener('click', cartItemClickListener);
   });
@@ -102,5 +111,6 @@ function localStorageCar() {
 window.onload = async function onload() {
   await getItem();
   await clickId();
-  await localStorageCar();
+  await totalPriceCar();
+  await searchLocalStorage();
 };
