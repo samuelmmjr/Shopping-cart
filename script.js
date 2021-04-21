@@ -30,6 +30,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
+// Requisito feito com ajuda de Nilson Ribeiro e Murilo Gonçalves
+
 async function totalPriceCar() {
   let total = 0;
   const itemValue = [...document.querySelectorAll('.cart__item')]; 
@@ -77,7 +79,7 @@ async function getItem() {
   });
 }
 
-// requisito 2
+// requisito 2 - Ajuda do estudante Sergio Martins, Adelino Jr e Nilson Ribeiro.
 
 async function searchId(id) {
   const itenId = await fetch(`https://api.mercadolibre.com/items/${id}`);
@@ -109,7 +111,8 @@ function searchLocalStorage() {
   totalPriceCar();
 }
 
-// requisito 6
+// requisito 6 - Feito com ajuda dos estudantes Nilson Ribeiro, Nathi Zebral.
+
 function cartClear() {
   const list = document.querySelector(itemsCart);
   list.innerHTML = '';
@@ -122,8 +125,22 @@ function cartClearBottom() {
    clear.addEventListener('click', cartClear);
 }
 
+// requisito 7 - Feito com e a colaboraçã dos estudantes Nilson Ribeiro, Nathi Zebral, Adelino jr.
+
+function loading() {
+  const createDiv = document.createElement('div');
+  createDiv.className = 'loading';
+  createDiv.innerText = 'loading...';
+  document.querySelector('#msgLoading').appendChild(createDiv);
+}
+
+function deletLoading() {
+  document.querySelector('.loading').remove();
+}
+
 window.onload = async function onload() {
-  await getItem();
+  loading();
+  await getItem().then(deletLoading);
   await clickId();
   await totalPriceCar();
   await searchLocalStorage();
