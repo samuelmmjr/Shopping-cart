@@ -109,9 +109,23 @@ function searchLocalStorage() {
   totalPriceCar();
 }
 
+// requisito 6
+function cartClear() {
+  const list = document.querySelector(itemsCart);
+  list.innerHTML = '';
+  totalPriceCar();
+  localStorage.clear();
+}
+
+function cartClearBottom() {
+  const clear = document.querySelector('.empty-cart');
+   clear.addEventListener('click', cartClear);
+}
+
 window.onload = async function onload() {
   await getItem();
   await clickId();
   await totalPriceCar();
   await searchLocalStorage();
+  await cartClearBottom();
 };
